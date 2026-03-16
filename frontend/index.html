@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorizador</title>
+</head>
+
+<body>
+
+    <div>
+        <label for="accountId">ID - Conta</label>
+        <input type="text" id="accountId" placeholder="Id da conta">
+
+        <label for="amount">Valor - Compra</label>
+        <input type="number" id="amount" placeholder="Valor da compra">
+
+        <label for="merchant">Nome - Loja</label>
+        <input type="text" id="merchant" placeholder="Nome da loja">
+
+        <button id="sendButton">Enviar</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            const accountId = document.getElementById('accountId').value;
+            const amount = document.getElementById('amount').value;
+            const merchant = document.getElementById('merchant').value;
+        });
+    </script>
+
+
+</body>
+</html>
