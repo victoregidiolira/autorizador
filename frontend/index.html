@@ -28,6 +28,26 @@
             const accountId = document.getElementById('accountId').value;
             const amount = document.getElementById('amount').value;
             const merchant = document.getElementById('merchant').value;
+            fetch('http://localhost:8080/transactions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                accountId: Number(accountId),
+                amount: Number(amount),
+                merchant: merchant
+            })
+        }).then(response => response.text())
+        .then(text => {
+            const result = document.getElementById('result');
+            result.textContent = text;
+            if (text === 'APPROVED') {
+                result.style.color = 'green';
+            } else {
+                result.style.color = 'red';
+            }
+        })
         });
     </script>
 
