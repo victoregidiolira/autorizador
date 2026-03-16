@@ -1,6 +1,6 @@
 # Autorizador
 
-API RESTful built with Java and Spring Boot that simulates a card payment terminal authorizer.
+API RESTful built with Java and Spring Boot that simulates a card payment terminal authorizer. Includes a minimal frontend for manual testing.
 
 ## What does it do?
 
@@ -13,15 +13,22 @@ Receives a purchase request, validates if the account exists and has sufficient 
 - Spring Data JPA
 - PostgreSQL 15
 - Docker
+- HTML / CSS / JavaScript
 
 ## How to run
 
 Prerequisite: Docker installed.
+
+**1. Start the backend and database:**
 ```bash
 docker-compose up
 ```
 
-That's it. The application runs on port `8080`.
+The API runs on port `8080`.
+
+**2. Open the frontend:**
+
+Open `frontend/index.html` in your browser.
 
 ## Endpoints
 
@@ -48,7 +55,7 @@ POST /transactions
 
 # Autorizador (Português)
 
-API RESTful desenvolvida em Java com Spring Boot que simula o autorizador de transações de uma maquininha de cartão.
+API RESTful desenvolvida em Java com Spring Boot que simula o autorizador de transações de uma maquininha de cartão. Inclui um frontend minimalista para testes manuais.
 
 ## O que faz?
 
@@ -61,15 +68,22 @@ Recebe uma requisição de compra, valida se a conta existe e se há saldo sufic
 - Spring Data JPA
 - PostgreSQL 15
 - Docker
+- HTML / CSS / JavaScript
 
 ## Como rodar
 
 Pré-requisito: ter Docker instalado.
+
+**1. Sobe o backend e o banco:**
 ```bash
 docker-compose up
 ```
 
-Só isso. A aplicação sobe na porta `8080`.
+A API sobe na porta `8080`.
+
+**2. Abre o frontend:**
+
+Abre o arquivo `frontend/index.html` no navegador.
 
 ## Endpoints
 
