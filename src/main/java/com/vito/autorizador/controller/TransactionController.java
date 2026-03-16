@@ -1,6 +1,7 @@
 package com.vito.autorizador.controller;
 
 import com.vito.autorizador.dto.TransactionRequest;
+import com.vito.autorizador.dto.TransactionResponse;
 import com.vito.autorizador.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,10 +22,10 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<String> authorize(@RequestBody TransactionRequest request){
-        String status = transactionService.authorize(request);
+    public ResponseEntity<TransactionResponse> authorize(@RequestBody TransactionRequest request){
+        TransactionResponse status = transactionService.authorize(request);
 
-        if (status.equals("APPROVED")){
+        if (status.getStatus().equals("APPROVED")){
             return ResponseEntity.ok(status);
         } else {
             return  ResponseEntity.status(422).body(status);

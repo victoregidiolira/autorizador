@@ -1,6 +1,7 @@
 package com.vito.autorizador.service;
 
 import com.vito.autorizador.dto.TransactionRequest;
+import com.vito.autorizador.dto.TransactionResponse;
 import com.vito.autorizador.model.Account;
 import com.vito.autorizador.model.Transaction;
 import com.vito.autorizador.repository.AccountRepository;
@@ -38,27 +39,41 @@ public class TransactionService {
 
     }
 
-    public String authorize(TransactionRequest request){
+    private TransactionResponse buildResponse(String status, Long accountId, BigDecimal amount, BigDecimal previousBalance, BigDecimal currentBalance){
+
+        TransactionResponse transactionResponse = new TransactionResponse();
+        transactionResponse.setStatus(status);
+        transactionResponse.setAccountId(accountId);
+        transactionResponse.setAmount(amount);
+        transactionResponse.setPreviousBalance(previousBalance);
+        transactionResponse.setCurrentBalance(currentBalance);
+
+        return transactionResponse;
+    }
+
+
+    public TransactionResponse authorize(TransactionRequest request){
         Optional<Account> optionalAccount = accountRepository.findById(request.getAccountId());
 
         if (optionalAccount.isEmpty()){
 
             saveTransaction(null, request.getAmount(),request.getMerchant(),"REJECTED");
-            return "REJECTED: ACCOUNT NOT FOUND.";
+            return buildResponse("REJECTED: ACCOUNT NOT FOUND.", request.getAccountId(), request.getAmount(), null, null);
         }
 
         Account account = optionalAccount.get();
+        BigDecimal previousBalance = account.getBalance();
 
         if (account.getBalance().compareTo(request.getAmount()) < 0){
             saveTransaction(account, request.getAmount(),request.getMerchant(),"REJECTED");
-            return "REJECTED: INSUFFICIENT FUNDS.";
+            return buildResponse("REJECTED: INSUFFICIENT FUNDS.", account.getId(), request.getAmount(),previousBalance,previousBalance);
         }
 
         account.setBalance(account.getBalance().subtract(request.getAmount()));
         accountRepository.save(account);
 
         saveTransaction(account,request.getAmount(), request.getMerchant(), "APPROVED");
-        return "APPROVED";
+        return buildResponse("APPROVED", account.getId(), request.getAmount(), previousBalance, account.getBalance());
 
     }
 
